@@ -1,18 +1,53 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       __   _(_)_ __ ___  _ __ ___                   "
-"                       \ \ / / | '_ ` _ \| '__/ __|                  "  
-"                        \ V /| | | | | | | | | (__                   " 
-"                       (_)_/ |_|_| |_| |_|_|  \___|                  "
-"                                                                     "
-" Author: m@lroot <malr00t@hell.net>                                  "
-" Source: https://github.com/pwilliam76/vimrc.git                     "
-"                                                                     "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Copyright (c) 2016 DigitalX All Rights Reserved                       "
+"                                                                       "  
+"                       __   _(_)_ __ ___  _ __ ___                     "
+"                       \ \ / / | '_ ` _ \| '__/ __|                    "  
+"                        \ V /| | | | | | | | | (__                     " 
+"                       (_)_/ |_|_| |_| |_|_|  \___|                    "
+"                                                                       "
+" Author:       malr00t <malr00t@hell.net>                              "
+" Source:       https://github.com/pwilliam76/vimrc.git                 "
+" CreateTime:   2016-12-19                                              "
+" LastModified: 2016-12-20                                              "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+"                           Support Platforms                           "
+"-----------------------------------------------------------------------"
+"   Windows / MSYS                                                      "  
+"   Linux                                                               "
+"   Mac OS X                                                            "
+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"   
+
+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+"                       Judge OS and Terminal Type                      "
+"-----------------------------------------------------------------------"
+    let g:isWindows=0
+    let g:isLinux=0
+    let g:isMac=0
+    let g:isGUI=0
+
+    if(has("win32") || has("win64") || has("win95") || has("win16"))
+        let g:isWindows=1
+    elseif (has("macunix"))
+        let g:isMac=1
+    elseif(has("unix"))
+        let g:isLinux=1
+    endif
+
+    if has("gui_running")
+        let g:isGUI=1
+    else
+        let g:isGUI=0
+    endif
+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 " { genernal settings
     syntax enable
     syntax on
-    set t_Co=256
+
+    set t_Co=256    "终端启用256色
     set cul 
     set shortmess=atI   
     autocmd InsertEnter * se cul    
@@ -28,15 +63,15 @@
     set softtabstop=4
     set shiftwidth=4
     set expandtab
-    set smarttab
+    set smarttab    "制定按一次backspace就删除当前字符
     set number
     set history=1000
-    set hlsearch
-    set incsearch
+    set hlsearch    "hilight search
+    set incsearch   "increase search
     set langmenu=zh_CN.UTF-8
     set helplang=cn
     set cmdheight=2
-    set autoread
+    set autoread    "当文件在外部被修改，自动更新该文件
     set completeopt=preview,menu 
     set autowrite
     set magic                   
