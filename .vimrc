@@ -9,7 +9,7 @@
 " Author:       malr00t <malr00t@hell.net>                              "
 " Source:       https://github.com/pwilliam76/vimrc.git                 "
 " CreateTime:   2016-12-19                                              "
-" LastModified: 2016-12-20                                              "
+" LastModified: 2016-12-21                                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -51,19 +51,24 @@
     endif
 "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
+"{  Auto change to current dir
+    autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+"}
+
+
 " { genernal settings
     syntax enable
     syntax on
-
+    
+    set autoindent
     set t_Co=256    "终端启用256色
     set cul 
     set shortmess=atI   
     autocmd InsertEnter * se cul    
-    set ruler           
+    set ruler       "显示光标信息           
     set showcmd         
     set scrolloff=3     
     set laststatus=2
-    set autoindent
     set smartindent
     set cindent
     set cinoptions=g0,:0,N-s,(0
@@ -172,7 +177,7 @@
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-endwise'
     Plugin 'ctrlpvim/ctrlp.vim'
-    Plugin 'majutsushi/tagbar'
+"    Plugin 'majutsushi/tagbar'
     Plugin 'octol/vim-cpp-enhanced-highlight'
     Plugin 'vim-airline/vim-airline'
     Plugin 'vim-airline/vim-airline-themes'
@@ -236,9 +241,10 @@
 "}
 
 "{ ctags
-    set tags+=/usr/include/tags
-    set tags+=~/.vim/systags
-    set tags+=~/.vim/x86_64-linux-gnu-systags
+    set tags+=/usr/include/tags;
+    set tags+=./tags;
+"    set tags+=~/.vim/systags
+"    set tags+=~/.vim/x86_64-linux-gnu-systags
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_semantic_triggers = {} 
     let g:ycm_semantic_triggers.c = ['->', '.', ' ', '(', '[', '&',']']
@@ -249,10 +255,22 @@
 "}
 
 "{ tagbar
-    let g:tagbar_ctags_bin = '/usr/bin/ctags'
-    let g:tagbar_width = 30
-    map <F4> :TagbarToggle<CR>
-    imap <F4> <ESC> :TagbarToggle<CR>
+"    let g:tagbar_ctags_bin = '/usr/bin/ctags'
+"    let g:tagbar_width = 30
+"    map <F4> :TagbarToggle<CR>
+"    imap <F4> <ESC> :TagbarToggle<CR>
+"}
+
+"{  taglist
+    map <F4> : Tlist<CR>  ""按下F3就可以呼出了  
+    "let Tlist_Auto_Open = 1                "在启动VIM后，自动打开taglist窗口  
+    let Tlist_Ctags_Cmd = '/usr/bin/ctags'  "设定ctags的位置  
+    let Tlist_Use_Right_Window=1            " 1为让窗口显示在右边，0为显示在左边  
+    let Tlist_Show_One_File=0               "让taglist可以同时展示多个文件的函数列表，1显示多个,0显示当前  
+    let Tlist_File_Fold_Auto_Close=1        "同时显示多个文件中的tag时，taglist只显示当前文件tag，>其他文件的函数列表折叠隐藏  
+    let Tlist_Exit_OnlyWindow=1             "当taglist是最后一个分割窗口时，自动退出vim  
+    "let Tlist_Use_SingleClick= 1           " 缺省情况下，在双击一个tag时，才会跳到该tag定义的位置  
+    "let Tlist_Process_File_Always=0        "是否一直处理tags.1:处理;0:不处理  
 "}
 
 "{ colorscheme
@@ -304,4 +322,33 @@
     map /  <Plug>(incsearch-forward)
     map ?  <Plug>(incsearch-backward)
     map g/ <Plug>(incsearch-stay)
+"}
+
+"{  cscope setting
+    if has("cscope")
+        " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+        set cscopetag
+        set csprg=/usr/bin/cscope
+        set csto=1
+        set cst
+        set nocsverb
+        " add any database in current directory
+        if filereadable("cscope.out")
+            cs add cscope.out
+        elseif $CSCOPE_DB!=""
+            cs add $CSCOPE_DB
+        endif
+
+        " show msg when any other cscope db added
+        set cscopeverbose
+
+        nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>	
+        nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>	
+        nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>	
+        nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>	
+        nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>	
+        nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+        nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+    endif
 "}
