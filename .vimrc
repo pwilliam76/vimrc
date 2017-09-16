@@ -95,7 +95,7 @@
     set confirm
     set nobackup
     set noswapfile
-    set noignorecase
+    set ignorecase
     set linespace=0
     set wildmenu
     set backspace=2
