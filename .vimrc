@@ -160,6 +160,9 @@
     call vundle#begin()
 
     Plugin 'VundleVim/Vundle.vim'
+    Plugin 'fatih/vim-go'
+    Plugin 'nsf/gocode'
+    Plugin 'dgryski/vim-godef'
     Plugin 'L9'
     Plugin 'chxuan/change-colorscheme'
     Plugin 'jiangmiao/auto-pairs'
