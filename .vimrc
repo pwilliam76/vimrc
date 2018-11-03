@@ -127,7 +127,7 @@
 		    call append(line("."), "") 
         elseif expand("%:e") == 'py'
             call setline(1,"#!/usr/bin/env python")
-            call append(line("."),"# coding=utf-8")
+            call append(line("."),"# -*- coding=utf-8 -*-")
 	        call append(line(".")+1, "") 
         elseif expand("%:e") == 'cpp'
 		    call setline(1,"#include <iostream>") 
@@ -161,7 +161,7 @@
 
     Plugin 'VundleVim/Vundle.vim'
     Plugin 'fatih/vim-go'
-    Plugin 'nsf/gocode'
+    "Plugin 'nsf/gocode'
     Plugin 'dgryski/vim-godef'
     Plugin 'L9'
     Plugin 'chxuan/change-colorscheme'
@@ -189,7 +189,7 @@
     Plugin 'vim-scripts/SQLComplete.vim'
     Plugin 'vim-scripts/txt.vim'
     Plugin 'ryanoasis/vim-devicons'
-    Plugin 'gorodinskiy/vim-coloresque'
+    "Plugin 'gorodinskiy/vim-coloresque'
     Plugin 'will133/vim-dirdiff'
     Plugin 'haya14busa/incsearch.vim'
     Plugin 'mhinz/vim-startify'
@@ -246,8 +246,6 @@
 "{ ctags
     set tags+=/usr/include/tags;
     set tags+=./tags;
-"    set tags+=~/.vim/systags
-"    set tags+=~/.vim/x86_64-linux-gnu-systags
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_semantic_triggers = {} 
     let g:ycm_semantic_triggers.c = ['->', '.', ' ', '(', '[', '&',']']
@@ -291,17 +289,38 @@
 "}
 
 "{ airline
-    let g:airline_theme="luna"
-    " let g:airline_theme="badwolf"
-    let g:airline_powerline_fonts = 1
+    let g:airline_theme="molokai"
+    "let g:airline_theme="badwolf"
+    let g:airline_powerline_fonts = 1 
+    let g:airline_exclude_filename=[]
+    if !exists('g:airline_symbols')
+        let g:airline_symbols={}
+    endif
     "let g:airline_section_b = '%{strftime("%c")}'
     "let g:airline_section_y = 'BN: %{bufnr("%")}'
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
+    let g:airline#extensions#tabline#formatter = 'default'
+    let g:airline#extensions#whitespace#enabled=0
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
     endif
+    "let g:airline_left_alt_sep = '»'
+    "let g:airline_left_sep = '▶'
+    "let g:airline_right_alt_sep = '«'
+    "let g:airline_right_sep = '◀'
+    let g:airline_symbols.crypt = '🔒'
+    let g:airline_symbols.linenr = '¶'
+    "let g:airline_symbols.linenr = '☰'
+    "let g:airline_symbols.maxlinenr = '㏑'
+    let g:airline_symbols.branch = '⭠'
+    let g:airline_symbols.readonly = '⭤'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.spell = 'Ꞩ'
+    let g:airline_symbols.notexists = 'Ɇ'
+    let g:airline_symbols.whitespace = 'Ξ'
+    
     let g:airline_left_sep = ''
     let g:airline_left_alt_sep = ''
     let g:airline_right_sep = ''
@@ -319,6 +338,7 @@
   
 "{ vim-devicons
     set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
+"    set guifont=Consolas\ for\ Powerline\ FixedD:h11
 "}
 
 "{ incsearch.vim
